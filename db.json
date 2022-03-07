@@ -1,0 +1,37 @@
+{
+  "projects": [
+    {
+      "name": "Hiring",
+      "budget": "3500",
+      "category": {
+        "id": "5",
+        "name": "Contratações"
+      },
+      "cost": 0,
+      "services": [],
+      "id": 13
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Infra"
+    },
+    {
+      "id": 2,
+      "name": "Desenvolvimento "
+    },
+    {
+      "id": 3,
+      "name": "Design"
+    },
+    {
+      "id": 4,
+      "name": "Planejamento"
+    },
+    {
+      "id": 5,
+      "name": "Contratações"
+    }
+  ]
+}
