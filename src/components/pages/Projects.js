@@ -16,19 +16,19 @@ function Projects() {
   useEffect(() => {
     setTimeout(() => {
       fetch("http://localhost:5000/projects", {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-      },
-    })
-      .then((resp) => resp.json())
-      .then((data) => {
-        console.log(data);
-        setProjects(data);
-        setRemoveLoading(true);
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+        },
       })
-      .catch((err) => console.log(err));
-    }, 1000)
+        .then((resp) => resp.json())
+        .then((data) => {
+          console.log(data);
+          setProjects(data);
+          setRemoveLoading(true);
+        })
+        .catch((err) => console.log(err));
+    }, 1000);
   }, []);
 
   const location = useLocation();
@@ -56,9 +56,7 @@ function Projects() {
             />
           ))}
         {!removeLoading && <Loading />}
-        {removeLoading && projects.length === 0 && (
-          <p>There is no project</p>
-        )}
+        {removeLoading && projects.length === 0 && <p>There is no project</p>}
       </Container>
     </div>
   );
