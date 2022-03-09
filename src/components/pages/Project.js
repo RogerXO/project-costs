@@ -7,6 +7,7 @@ import Container from "../layout/Container";
 import Message from "../layout/Message";
 import ProjectForm from "../project/ProjectForm";
 import ServiceForm from "../service/ServiceForm";
+import ServiceCard from "../service/ServiceCard";
 
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -14,6 +15,7 @@ import { useState, useEffect } from "react";
 function Project() {
   const { id } = useParams();
   const [project, setProject] = useState([]);
+  const [services, setServices] = useState([]);
   const [showProjectForm, setShowProjectForm] = useState(false);
   const [showServiceForm, setShowServiceForm] = useState(false);
   const [message, setMessage] = useState();
@@ -30,6 +32,7 @@ function Project() {
         .then((resp) => resp.json())
         .then((data) => {
           setProject(data);
+          setServices(data.services);
         })
         .catch((err) => console.log(err));
     }, 300);
@@ -90,8 +93,35 @@ function Project() {
     })
       .then((resp) => resp.json())
       .then((data) => {
-        //show the services
-        console.log(data);
+        setShowServiceForm(false);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  function removeService(id, cost) {
+    setMessage("");
+
+    const servicesUpdated = project.services.filter(
+      (service) => service.id !== id
+    );
+
+    const projectUpdated = project;
+    projectUpdated.services = servicesUpdated;
+    projectUpdated.cost = parseFloat(projectUpdated.cost) - parseFloat(cost);
+
+    fetch(`http://localhost:5000/projects/${projectUpdated.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(projectUpdated),
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        setProject(projectUpdated);
+        setServices(servicesUpdated);
+        setMessage("Service removed successfully");
+        setType("success");
       })
       .catch((err) => console.log(err));
   }
@@ -154,7 +184,18 @@ function Project() {
             </div>
             <h2>Services</h2>
             <Container customClass="start">
-              <p>Services itens</p>
+              {services.length > 0 &&
+                services.map((service) => (
+                  <ServiceCard
+                    id={service.id}
+                    name={service.name}
+                    cost={service.cost}
+                    description={service.description}
+                    key={service.id}
+                    handleRemove={removeService}
+                  />
+                ))}
+              {services.length === 0 && <p>There is no services</p>}
             </Container>
           </Container>
         </div>
