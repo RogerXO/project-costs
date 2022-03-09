@@ -29,7 +29,7 @@ function Projects() {
           setRemoveLoading(true);
         })
         .catch((err) => console.log(err));
-    }, 300);
+    }, 500);
   }, []);
 
   const location = useLocation();
