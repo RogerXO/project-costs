@@ -7,8 +7,15 @@
         "id": "2",
         "name": "Development"
       },
-      "cost": 0,
-      "services": [],
+      "cost": 15,
+      "services": [
+        {
+          "name": "Comprar açaizin",
+          "cost": "15",
+          "description": "Comprar açai",
+          "id": "3dfa4cb4-788c-4928-832f-dc9b6e34a2f3"
+        }
+      ],
       "id": 15
     },
     {
@@ -76,6 +83,17 @@
       "cost": 0,
       "services": [],
       "id": 29
+    },
+    {
+      "name": "Finish react project",
+      "budget": "500",
+      "category": {
+        "id": "2",
+        "name": "Development"
+      },
+      "cost": 0,
+      "services": [],
+      "id": 30
     }
   ],
   "categories": [
