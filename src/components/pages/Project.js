@@ -12,6 +12,7 @@ function Project() {
   const { id } = useParams();
   const [project, setProject] = useState([]);
   const [showProjectForm, setShowProjectForm] = useState(false);
+  const [showServiceForm, setShowServiceForm] = useState(false);
   const [message, setMessage] = useState();
   const [type, setType] = useState();
 
@@ -32,6 +33,7 @@ function Project() {
   }, [id]);
 
   function editPost(project) {
+    setMessage("");
     //budget validation
     if (project.budget < project.cost) {
       setMessage("The project budget can't be less than project cost");
@@ -57,6 +59,10 @@ function Project() {
 
   function toggleProjectForm() {
     setShowProjectForm(!showProjectForm);
+  }
+
+  function toggleServiceForm() {
+    setShowServiceForm(!showServiceForm);
   }
 
   return (
@@ -92,6 +98,19 @@ function Project() {
                 </div>
               )}
             </div>
+            <div className={styles.service_form_container}>
+              <h2>Add a service</h2>
+              <button className={styles.btn} onClick={toggleServiceForm}>
+                {!showServiceForm ? "Add service" : "Close"}
+              </button>
+              <div className={styles.project_info}>
+                {showServiceForm && <div>Service form</div>}
+              </div>
+            </div>
+            <h2>Services</h2>
+            <Container customClass="start">
+              <p>Services itens</p>
+            </Container>
           </Container>
         </div>
       ) : (
