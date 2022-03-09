@@ -2,6 +2,8 @@ import styles from "./Project.module.css";
 
 import Loading from "../layout/Loading";
 import Container from "../layout/Container";
+import Message from "../layout/Message";
+import ProjectForm from "../project/ProjectForm";
 
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -10,6 +12,8 @@ function Project() {
   const { id } = useParams();
   const [project, setProject] = useState([]);
   const [showProjectForm, setShowProjectForm] = useState(false);
+  const [message, setMessage] = useState();
+  const [type, setType] = useState();
 
   useEffect(() => {
     setTimeout(() => {
@@ -27,6 +31,30 @@ function Project() {
     }, 300);
   }, [id]);
 
+  function editPost(project) {
+    //budget validation
+    if (project.budget < project.cost) {
+      setMessage("The project budget can't be less than project cost");
+      setType("error");
+    }
+
+    fetch(`http://localhost:5000/projects/${project.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(project),
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        setProject(data);
+        setShowProjectForm(false);
+        setMessage("Project update successfully");
+        setType("success");
+      })
+      .catch((err) => console.log(err));
+  }
+
   function toggleProjectForm() {
     setShowProjectForm(!showProjectForm);
   }
@@ -36,6 +64,7 @@ function Project() {
       {project.name ? (
         <div className={styles.project_details}>
           <Container customClass="column">
+            {message && <Message type={type} msg={message} />}
             <div className={styles.details_container}>
               <h1>Project: {project.name}</h1>
               <button className={styles.btn} onClick={toggleProjectForm}>
@@ -44,10 +73,10 @@ function Project() {
               {!showProjectForm ? (
                 <div className={styles.project_info}>
                   <p>
-                    <span>Category:</span> {project.category.name}  
+                    <span>Category:</span> {project.category.name}
                   </p>
                   <p>
-                    <span>Total budget</span> R${project.budget}    
+                    <span>Total budget</span> R${project.budget}
                   </p>
                   <p>
                     <span>Total used</span> R${project.cost}
@@ -55,7 +84,11 @@ function Project() {
                 </div>
               ) : (
                 <div className={styles.project_info}>
-                  <p>Form</p>
+                  <ProjectForm
+                    handleSubmit={editPost}
+                    btnText="Done"
+                    projectData={project}
+                  />
                 </div>
               )}
             </div>
