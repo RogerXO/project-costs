@@ -19,3 +19,9 @@
   background-color: #f8d7da;
   border-color: #f5c6cb;
 }
+
+.removed {
+  color: #53410f;
+  background-color: #eed89b;
+  border-color: #e7d193;
+}

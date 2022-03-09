@@ -29,7 +29,7 @@ function Projects() {
           setRemoveLoading(true);
         })
         .catch((err) => console.log(err));
-    }, 600);
+    }, 300);
   }, []);
 
   const location = useLocation();
@@ -59,7 +59,7 @@ function Projects() {
         <LinkButton to="/newProject" text="Create project" />
       </div>
       {message && <Message msg={message} type="success" />}
-      {projectMessage && <Message msg={projectMessage} type="success" />}
+      {projectMessage && <Message msg={projectMessage} type="removed" />}
       <Container customClass="start">
         {projects.length > 0 &&
           projects.map((project) => (
