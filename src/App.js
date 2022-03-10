@@ -14,7 +14,7 @@ import Footer from './components/layout/Footer';
 
 function App() {
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <NavBar/>
       <Container customClass="minHeight">
         <Routes>
