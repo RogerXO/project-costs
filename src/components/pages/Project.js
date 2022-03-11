@@ -35,7 +35,7 @@ function Project() {
           setServices(data.services);
         })
         .catch((err) => console.log(err));
-    }, 250);
+    }, 150);
   }, [id]);
 
   function editPost(project) {
