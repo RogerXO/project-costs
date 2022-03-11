@@ -12,7 +12,7 @@ function NewProject() {
     project.cost = 0;
     project.services = [];
 
-    fetch("http://localhost:5000/projects", {
+    fetch("https://project-costs-server.herokuapp.com/projects", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
